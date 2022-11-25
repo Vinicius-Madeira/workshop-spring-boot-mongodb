@@ -1,6 +1,7 @@
 package com.viniciusmadeira.workshopmongo.services;
 
 import com.viniciusmadeira.workshopmongo.domain.User;
+import com.viniciusmadeira.workshopmongo.dto.UserDTO;
 import com.viniciusmadeira.workshopmongo.repository.UserRepository;
 import com.viniciusmadeira.workshopmongo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,15 @@ public class UserService {
         return repo.findAll();
     }
 
-    public Optional<User> findById(String id) {
-        Optional<User> user = repo.findById(id);
-        if (user.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found");
-        }
-        return user;
+    public User findById(String id) {
+        Optional<User> optionalUser = repo.findById(id);
+        return optionalUser.orElseThrow(() -> new ObjectNotFoundException("Object not found"));
+    }
+    public User insert(User obj) {
+        return repo.insert(obj);
+    }
+
+    public User fromDTO(UserDTO objDto) {
+        return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
     }
 }

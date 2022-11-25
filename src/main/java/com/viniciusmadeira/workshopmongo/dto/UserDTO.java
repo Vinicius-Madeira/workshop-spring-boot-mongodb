@@ -1,10 +1,8 @@
 package com.viniciusmadeira.workshopmongo.dto;
 
 import com.viniciusmadeira.workshopmongo.domain.User;
-import com.viniciusmadeira.workshopmongo.services.exception.ObjectNotFoundException;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -19,15 +17,6 @@ public class UserDTO implements Serializable {
         id = obj.getId();
         name = obj.getName();
         email = obj.getEmail();
-    }
-
-    public UserDTO(Optional<User> obj) {
-        if (obj.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found");
-        }
-        id = obj.get().getName();
-        name = obj.get().getName();
-        email = obj.get().getEmail();
     }
 
     public String getId() {
